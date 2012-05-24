@@ -83,7 +83,7 @@ func (m Matrix4) Sub(q Matrix4) Matrix4 {
 		m[9] - q[9], m[10] - q[10], m[11] - q[11], m[12] - q[12], m[13] - q[13], m[14] - q[14], m[15] - q[15]}[:]
 }
 
-func (m Matrix4) NewZero() Matrix4 {
+func (m Matrix4) Zero() Matrix4 {
 	m[0], m[1], m[2], m[3] = 0, 0, 0, 0
 	m[4], m[5], m[6], m[7] = 0, 0, 0, 0
 	m[8], m[9], m[10], m[11] = 0, 0, 0, 0
@@ -91,7 +91,7 @@ func (m Matrix4) NewZero() Matrix4 {
 	return m
 }
 
-func (m Matrix4) NewIdentity() Matrix4 {
+func (m Matrix4) Identity() Matrix4 {
 	m[0], m[1], m[2], m[3] = 1, 0, 0, 0
 	m[4], m[5], m[6], m[7] = 0, 1, 0, 0
 	m[8], m[9], m[10], m[11] = 0, 0, 1, 0
@@ -245,7 +245,7 @@ func (a Matrix4) ApproxEquals(b Matrix4, ε float32) bool {
 // Orthogonalize will modify this matrix (fixme)
 func (m Matrix4) Orthogonalize(){
 	i := NewVf(m[0],m[1],m[2])
-	j := NewVf(m[3],m[4],m[5]) 
+	j := NewVf(m[3],m[4],m[5])
 	k := NewVf(m[6],m[7],m[8]).Normalize();
 	i = j.Cross(k).Normalize()
 	j=k.Cross(i);
@@ -270,7 +270,7 @@ func (m Matrix4) at(row, col int) float32 {
 	return m[row+col*4]
 }
 
-func (m Matrix4) ToQuaternion() Quaternion {
+func (m Matrix4) Quaternion() Quaternion {
 	// Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
 	// article "HQuaternion Calculus and Fast Animation".
 	toQuaternionNext := []int{1, 2, 0}

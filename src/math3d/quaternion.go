@@ -23,7 +23,7 @@ func NewQuaternionV(v []float32) Quaternion {
 }
 
 func NewQuaternionM(rotationMatrix Matrix4) Quaternion {
-	return rotationMatrix.ToQuaternion()
+	return rotationMatrix.Quaternion()
 }
 
 func NewQFromAxisAngle(axis Vector3, angle float32) Quaternion {
@@ -109,7 +109,7 @@ func (m Quaternion) Magnitude() float32 {
 	return Sqrtf(m[0]*m[0] + m[1]*m[1] + m[2]*m[2] + m[3]*m[3])
 }
 
-func (m Quaternion) ToRotationMatrix() Matrix4 {
+func (m Quaternion) RotationMatrix() Matrix4 {
 
 	twoX := 2. * m[1]
 	twoY := 2. * m[2]
@@ -146,7 +146,7 @@ func (m Quaternion) FromAxisAngle(axis Vector3, angle float32) Quaternion {
 	return m
 }
 
-func (m Quaternion) ToAxisAngle() (axis Vector3, angle float32) {
+func (m Quaternion) AxisAngle() (axis Vector3, angle float32) {
 	// The quaternion representing the rotation is
 	//   q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)
 

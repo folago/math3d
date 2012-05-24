@@ -28,7 +28,7 @@ func (m Matrix3) Copy() Matrix3 {
 	return Matrix3{m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8]}[:]
 }
 
-func (m Matrix3) NewZero() Matrix3 {
+func (m Matrix3) Zero() Matrix3 {
 	m[0] = .0
 	m[1] = .0
 	m[2] = .0
@@ -41,7 +41,7 @@ func (m Matrix3) NewZero() Matrix3 {
 	return m
 }
 
-func (m Matrix3) NewIdentity() Matrix3 {
+func (m Matrix3) Identity() Matrix3 {
 	m[0] = 1.
 	m[4] = 1.
 	m[8] = 1.
@@ -138,7 +138,7 @@ func (m Matrix3) Transpose() Matrix3 {
 // Orthogonalize will modify this matrix
 func (m Matrix3) Orthogonalize(){
 	i := NewVector3(m[0],m[1],m[2])
-	j := NewVector3(m[3],m[4],m[5]) 
+	j := NewVector3(m[3],m[4],m[5])
 	k := NewVector3(m[6],m[7],m[8]).Normalize();
 	i = j.Cross(k).Normalize()
 	j=k.Cross(i);

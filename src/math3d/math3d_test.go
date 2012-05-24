@@ -32,7 +32,7 @@ func Setup3() {
 	setup3 = true
 }
 
-// 
+//
 func makeA3() Matrix3 {
 	return NewMatrix3V([]float32{1, 2, 3, 4, 5, -6, 7, 8, 9}, true)
 }
@@ -68,7 +68,7 @@ func makeM4M2() Matrix3 {
 }
 
 func Test_3Approximates1(t *testing.T) {
-	math.Sin(1.) // Just to make sure math import is used 
+	math.Sin(1.) // Just to make sure math import is used
 	A := makeA3()
 	B := makeB3()
 	C := makeC3()
@@ -260,7 +260,7 @@ func Test_3Mutiply1(t *testing.T) {
 
 func Test_3Mutiply2(t *testing.T) {
 
-	I := NewMatrix3().NewIdentity()
+	I := NewMatrix3().Identity()
 
 	A := makeA3()
 	ai := A.Copy().Inverse()

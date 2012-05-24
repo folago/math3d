@@ -163,7 +163,7 @@ func Test_4Transpose2(t *testing.T) {
 
 func Test_4Mutiply0(t *testing.T) {
 
-	I := NewMatrix4().NewIdentity()
+	I := NewMatrix4().Identity()
 
 	A := makeA()
 	ai := makeA().Inverse()
@@ -393,7 +393,7 @@ func Test_4Mutiply3(t *testing.T) {
 	if !setup4 {
 		Setup4()
 	}
-	I := NewMatrix4().NewIdentity()
+	I := NewMatrix4().Identity()
 
 	for i := 0; i < len(a4Array); i++ {
 		A := NewMatrix4V(a4Array[i], true)
@@ -453,7 +453,7 @@ func Test_4Quat1(t *testing.T) {
 		fmt.Println("q	=", q)
 		for i:=0.;i<=1.0;i+=0.1 {
 			m.Slerp(float32(i),p,q)
-			fmt.Println("m	=", m)	
+			fmt.Println("m	=", m)
 		}
 	*/
 }
@@ -529,7 +529,7 @@ func Test_4Quat3(t *testing.T) {
 		0.333333, 0.933333, 0.133333, 0.000000,
 		0.000000, 0.000000, 0.000000, 1.000000}[:]
 	M := NewMatrix4V(mdata, true)
-	m := p1n.ToRotationMatrix()
+	m := p1n.RotationMatrix()
 	if !m.ApproxEquals(M, ε4d) {
 		fmt.Println("Failed generate rotation matrix. Expected results as 'M' got 'm'")
 		fmt.Println("M	=", M)
@@ -551,9 +551,9 @@ func Test_4Quat3(t *testing.T) {
 		t.Fail()
 	}
 	//fmt.Println("M	=", M)
-	q := M.ToQuaternion()
+	q := M.Quaternion()
 	if !q.ApproxEquals(P1N, ε4d) {
-		fmt.Println("Failed to run ToQuaternion(). Expected results as 'P1N' got 'q'")
+		fmt.Println("Failed to run Quaternion(). Expected results as 'P1N' got 'q'")
 		fmt.Println("P1N	=", P1N)
 		fmt.Println("q	=", q)
 		fmt.Println()

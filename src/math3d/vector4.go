@@ -47,13 +47,13 @@ func (v1 Vector4) Dot3d(v2 Vector4) float32 {
 
 // For those cases when the 4d vector represents just a 3d vector. 4:t axis is ignored
 func (v1 Vector4) Cross3d(v2 Vector4) Vector4 {
-	return Vector4{v1[1]*v2[2]-v1[2]*v2[1],v1[2]*v2[0]-v1[0]*v2[2],v1[0]*v2[1]-v1[1]*v2[0]} 
+	return Vector4{v1[1]*v2[2]-v1[2]*v2[1],v1[2]*v2[0]-v1[0]*v2[2],v1[0]*v2[1]-v1[1]*v2[0]}
 }
 */
 
 // If two vectors represents points the distance between them can be calculated
 // Forth value is ignored
-func (v0 Vector4) Distance3d(v1 Vector4) float32 {
+func (v0 Vector4) Distance(v1 Vector4) float32 {
 	d0 := v0[0] - v1[0]
 	d1 := v0[1] - v1[1]
 	d2 := v0[2] - v1[2]
