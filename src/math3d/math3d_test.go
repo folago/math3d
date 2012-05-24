@@ -264,7 +264,7 @@ func Test_3Mutiply2(t *testing.T) {
 
 	A := makeA3()
 	ai := A.Copy().Inverse()
-	da := A.Determinant()
+	da := A.Det()
 	B := makeB3()
 	bi := makeB3().Inverse()
 	C := makeC3()
@@ -295,7 +295,7 @@ func Test_3Mutiply2(t *testing.T) {
 func Test_3Mutiply3(t *testing.T) {
 
 	A := makeA3()
-	da := A.Determinant()
+	da := A.Det()
 	B := makeB3()
 	bi := makeB3().Inverse()
 	C := makeC3()

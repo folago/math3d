@@ -54,7 +54,7 @@ func (m Matrix3) Identity() Matrix3 {
 	return m
 }
 
-func (m Matrix3) Determinant() float32 {
+func (m Matrix3) Det() float32 {
 	return m[0]*(m[4]*m[8]-m[5]*m[7]) - m[1]*(m[3]*m[8]-m[5]*m[6]) + m[2]*(m[3]*m[7]-m[4]*m[6])
 }
 
@@ -65,7 +65,7 @@ func (m Matrix3) MulS(scalar float32) Matrix3 {
 
 func (m Matrix3) Inverse() Matrix3 {
 	r := NewMatrix3()
-	d := 1.0 / m.Determinant()
+	d := 1.0 / m.Det()
 	r[0] = d * (m[4]*m[8] - m[5]*m[7])
 	r[1] = -d * (m[1]*m[8] - m[2]*m[7])
 	r[2] = d * (m[1]*m[5] - m[2]*m[4])

@@ -65,7 +65,7 @@ func (m Matrix4) MulV(v Vector4) Vector4 {
 		m[0]*v[0] + m[4]*v[1] + m[8]*v[2] + m[12]*v[3],
 		m[1]*v[0] + m[5]*v[1] + m[9]*v[2] + m[13]*v[3],
 		m[2]*v[0] + m[6]*v[1] + m[10]*v[2] + m[14]*v[3],
-		m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3]}[:]
+		m[3]*v[0] + m[7]*v[1] + m[11]*v[2] + m[15]*v[3]}
 }
 
 func (m Matrix4) DivS(scalar float32) Matrix4 {
@@ -99,7 +99,8 @@ func (m Matrix4) Identity() Matrix4 {
 	return m
 }
 
-func (m Matrix4) Determinant() float32 {
+// Return the determinant
+func (m Matrix4) Det() float32 {
 	a0 := m[0]*m[5] - m[4]*m[1]
 	a1 := m[0]*m[9] - m[8]*m[1]
 	a2 := m[0]*m[13] - m[12]*m[1]
@@ -131,7 +132,7 @@ func (m Matrix4) Inverse() Matrix4 {
 	det := a0*b5 - a1*b4 + a2*b3 + a3*b2 - a4*b1 + a5*b0
 	if Fabsf(det) <= internalε {
 		// Todo: fix this. Maybe a ",ok" return value?
-		panic("Determinant is zero ")
+		panic("determinant is zero")
 	}
 	id := 1. / det
 	return Matrix4{
@@ -181,16 +182,7 @@ func (m Matrix4) NotEqual(q Matrix4) bool {
 		m[12] != q[12] || m[13] != q[13] || m[14] != q[14] || m[15] != q[15]
 }
 
-// Mutiply this matrix with a column vector v, resulting in another column vector
-func (m Matrix4) MultiplyV(v Vector4) Vector4 {
-	return Vector4{
-		m[0]*v[0] + m[1]*v[1] + m[2]*v[2] + m[3]*v[3],
-		m[4]*v[0] + m[5]*v[1] + m[6]*v[2] + m[7]*v[3],
-		m[8]*v[0] + m[9]*v[1] + m[10]*v[2] + m[11]*v[3],
-		m[12]*v[0] + m[13]*v[1] + m[14]*v[2] + m[15]*v[3]}
-}
-
-func (m Matrix4) MultiplyM(q Matrix4) Matrix4 {
+func (m Matrix4) Mul(q Matrix4) Matrix4 {
 	r := NewMatrix4()
 	r[0] = q[0]*m[0] + q[1]*m[4] + q[2]*m[8] + q[3]*m[12]
 	r[1] = q[0]*m[1] + q[1]*m[5] + q[2]*m[9] + q[3]*m[13]

@@ -167,13 +167,13 @@ func Test_4Mutiply0(t *testing.T) {
 
 	A := makeA()
 	ai := makeA().Inverse()
-	da := A.Determinant()
+	da := A.Det()
 	B := makeB()
 	bi := makeB().Inverse()
 	C := makeC()
 	ci := makeC().Inverse()
 
-	a := A.MultiplyM(ai)
+	a := A.Mul(ai)
 	if !I.ApproxEquals(a, ε4d) {
 		fmt.Println("a=", A)
 		fmt.Println("det(a)=", da)
@@ -181,13 +181,13 @@ func Test_4Mutiply0(t *testing.T) {
 		fmt.Println("I=", a)
 		t.Fail()
 	}
-	b := B.MultiplyM(bi)
+	b := B.Mul(bi)
 	if !I.ApproxEquals(b, ε4d) {
 		fmt.Println("b", b)
 		fmt.Println("I", I)
 		t.Fail()
 	}
-	c := C.MultiplyM(ci)
+	c := C.Mul(ci)
 	if !I.ApproxEquals(c, ε4d) {
 		fmt.Println("c", c)
 		fmt.Println("i", I)
@@ -198,13 +198,13 @@ func Test_4Mutiply0(t *testing.T) {
 func Test_4Mutiply2(t *testing.T) {
 
 	A := makeA()
-	da := A.Determinant()
+	da := A.Det()
 	B := makeB()
 	bi := makeB().Inverse()
 	C := makeC()
 	ci := makeC().Inverse()
 
-	a := A.MultiplyM(B).MultiplyM(C).MultiplyM(ci).MultiplyM(bi)
+	a := A.Mul(B).Mul(C).Mul(ci).Mul(bi)
 	if !A.ApproxEquals(a, ε4d) {
 		fmt.Println("a=", A)
 		fmt.Println("det(a)=", da)
@@ -352,7 +352,7 @@ func Test_4Transpose5(t *testing.T) {
 		at := A.Copy().Transpose()
 		B := NewMatrix4V(b4Array[i], true)
 		bt := B.Copy().Transposed()
-		btat := bt.Copy().MultiplyM(at)
+		btat := bt.Copy().Mul(at)
 		P := NewMatrix4V(p4Array[i], true)
 		pt := P.Copy().Transpose()
 		if !pt.ApproxEquals(btat, ε4d) {
@@ -376,7 +376,7 @@ func Test_4Mutiply1(t *testing.T) {
 		A := NewMatrix4V(a4Array[i], true)
 		B := NewMatrix4V(b4Array[i], true)
 		P := NewMatrix4V(p4Array[i], true)
-		p := A.Copy().MultiplyM(B)
+		p := A.Copy().Mul(B)
 		if !P.ApproxEquals(p, ε4d) {
 			fmt.Println("failed to multiply 'A*B'. Expected result as 'P', got 'p'")
 			fmt.Println("A	=", A)
@@ -405,7 +405,7 @@ func Test_4Mutiply3(t *testing.T) {
 		ai := A.Copy().Inverse()
 		bi := B.Copy().Inverse()
 
-		p := A.Copy().MultiplyM(B).MultiplyM(at).MultiplyM(bt).MultiplyM(bti).MultiplyM(ati).MultiplyM(bi).MultiplyM(ai)
+		p := A.Copy().Mul(B).Mul(at).Mul(bt).Mul(bti).Mul(ati).Mul(bi).Mul(ai)
 
 		// Allow the ε to be larger, we're multiplying a long chain of matrixes
 		if !I.ApproxEquals(p, ε4d*100) {
