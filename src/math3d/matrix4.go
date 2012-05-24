@@ -43,10 +43,8 @@ func NewMatrix4() Matrix4 {
 	}
 }
 
-/*
-untested code
-*/
-func NewRotationMatrix(look, tmpUp Vector3) Matrix4 {
+// FIXME untested code
+func newRotationMatrix(look, tmpUp Vector3) Matrix4 {
 	look = look.Copy().Normalize()
 	right := tmpUp.Copy().Normalize().Cross(look).Normalize()
 	up := look.Cross(right).Normalize()
@@ -227,7 +225,7 @@ func (m Matrix4) Inverse() Matrix4 {
 }
 
 // FIXME - fixme
-func (m Matrix4) Cofactor() Matrix4 {
+func (m Matrix4) cofactor() Matrix4 {
 	r := NewMatrix4()
 	r[0] = (m[4]*m[8] - m[5]*m[7])
 	r[1] = -(m[3]*m[8] - m[5]*m[6])
@@ -322,7 +320,7 @@ func (a Matrix4) ApproxEquals(b Matrix4, ε float32) bool {
 }
 
 /*
-// Orthogonalize will modify this matrix (fixme)
+// FIXME Orthogonalize will modify this matrix
 func (m Matrix4) Orthogonalize(){
 	i := NewVf(m[0],m[1],m[2])
 	j := NewVf(m[3],m[4],m[5])
@@ -334,7 +332,7 @@ func (m Matrix4) Orthogonalize(){
 	m[2]=i[6]; m[5]=j[6]; m[8]=k[6]
 }
 
-// Orthogonalize will not modify this matrix (fixme)
+// FIXME Orthogonalize will not modify this matrix
 func (m1 Matrix4) Orthogonalized() Matrix4{
 	m := m1.Copy()
 	m.Orthogonalize();
@@ -343,9 +341,7 @@ func (m1 Matrix4) Orthogonalized() Matrix4{
 
 */
 
-/*
-Returns the element at row,col
-*/
+//Returns the element at row,col
 func (m Matrix4) at(row, col int) float32 {
 	return m[row+col*4]
 }
