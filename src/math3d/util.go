@@ -6,7 +6,7 @@ http://www.boost.org/LICENSE_1_0.txt
 http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 */
 
-package math3d32
+package math3d
 
 import "math"
 
@@ -22,8 +22,8 @@ const TwoPi float32 = float32(math.Pi * 2.)
 const PiHalf float32 = float32(math.Pi * .5)
 const Epsilon float32 = 0.000001
 
-// these functions only exists so that we don't have to 
-// use ugly float32() and float64() convertions all over the math3d32 code 
+// these functions only exists so that we don't have to
+// use ugly float32() and float64() convertions all over the math3d code
 func Sinf(a float32) float32 {
 	return float32(math.Sin(float64(a)))
 }
@@ -41,7 +41,7 @@ func Acosf(a float32) float32 {
 }
 
 func Fabsf(a float32) float32 {
-	return float32(math.Fabs(float64(a)))
+	return float32(math.Abs(float64(a)))
 }
 
 // Signbit returns true if x is negative or negative zero.
@@ -107,7 +107,7 @@ func MinAngleBetween(a1, a2 float32) float32 {
 
 /*
 func MinAngleBetweenVersion2(a1,a2 float32) float32 {
-	// this solution does not care about the sign  
+	// this solution does not care about the sign
 	var crossDiff, directDiff float32
 	if a1 > a2 {
 		crossDiff = TwoPi - a1 + a2
