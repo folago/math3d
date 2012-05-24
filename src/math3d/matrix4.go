@@ -186,7 +186,14 @@ func (m Matrix4) Det() float32 {
 	return a0*b5 - a1*b4 + a2*b3 + a3*b2 - a4*b1 + a5*b0
 }
 
-func (m Matrix4) Inverse() Matrix4 {
+func (m Matrix4) MustInverse() Matrix4 {
+	if r, err := m.Inverse(); err == nil {
+		return r
+	}
+	panic("determinant is zero")
+}
+
+func (m Matrix4) Inverse() (Matrix4, error) {
 	a0 := m[0]*m[5] - m[4]*m[1]
 	a1 := m[0]*m[9] - m[8]*m[1]
 	a2 := m[0]*m[13] - m[12]*m[1]
@@ -201,8 +208,7 @@ func (m Matrix4) Inverse() Matrix4 {
 	b5 := m[10]*m[15] - m[14]*m[11]
 	det := a0*b5 - a1*b4 + a2*b3 + a3*b2 - a4*b1 + a5*b0
 	if Fabsf(det) <= internalε {
-		// TODO: fix this. Maybe a ",ok" return value? yup
-		panic("determinant is zero")
+		return Matrix4{}, errors.New("determinant is zero")
 	}
 	id := 1. / det
 	return Matrix4{
@@ -221,7 +227,8 @@ func (m Matrix4) Inverse() Matrix4 {
 		id * (-m[6]*a5 + m[10]*a4 - m[14]*a3),
 		id * (+m[2]*a5 - m[10]*a2 + m[14]*a1),
 		id * (-m[2]*a4 + m[6]*a2 - m[14]*a0),
-		id * (+m[2]*a3 - m[6]*a1 + m[10]*a0)}
+		id * (+m[2]*a3 - m[6]*a1 + m[10]*a0),
+	}, nil
 }
 
 // FIXME - fixme

@@ -170,12 +170,12 @@ func Test_4Mutiply0(t *testing.T) {
 	I := NewMatrix4().Identity()
 
 	A := makeA()
-	ai := makeA().Inverse()
+	ai := makeA().MustInverse()
 	da := A.Det()
 	B := makeB()
-	bi := makeB().Inverse()
+	bi := makeB().MustInverse()
 	C := makeC()
-	ci := makeC().Inverse()
+	ci := makeC().MustInverse()
 
 	a := A.Mul(ai)
 	if !I.ApproxEquals(a, ε4d) {
@@ -204,9 +204,9 @@ func Test_4Mutiply2(t *testing.T) {
 	A := makeA()
 	da := A.Det()
 	B := makeB()
-	bi := makeB().Inverse()
+	bi := makeB().MustInverse()
 	C := makeC()
-	ci := makeC().Inverse()
+	ci := makeC().MustInverse()
 
 	a := A.Mul(B).Mul(C).Mul(ci).Mul(bi)
 	if !A.ApproxEquals(a, ε4d) {
@@ -267,8 +267,8 @@ func Test_4Inv1(t *testing.T) {
 		B, _ := NewMatrix4V(b4Array[i], true)
 		AI, _ := NewMatrix4V(aI4Array[i], true)
 		BI, _ := NewMatrix4V(bI4Array[i], true)
-		ai := A.Inverse()
-		bi := B.Inverse()
+		ai := A.MustInverse()
+		bi := B.MustInverse()
 		if !AI.ApproxEquals(ai, ε4d) {
 			fmt.Println("failed to inverse 'A'. Expected result as 'AI', got 'ai'")
 			fmt.Println("A	=", A)
@@ -404,11 +404,11 @@ func Test_4Mutiply3(t *testing.T) {
 		A, _ := NewMatrix4V(a4Array[i], true)
 		B, _ := NewMatrix4V(b4Array[i], true)
 		at := A.ITranspose()
-		ati := at.Inverse()
+		ati := at.MustInverse()
 		bt := B.ITranspose()
-		bti := bt.Inverse()
-		ai := A.Inverse()
-		bi := B.Inverse()
+		bti := bt.MustInverse()
+		ai := A.MustInverse()
+		bi := B.MustInverse()
 
 		p := A.Mul(B).Mul(at).Mul(bt).Mul(bti).Mul(ati).Mul(bi).Mul(ai)
 
