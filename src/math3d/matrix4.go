@@ -15,7 +15,7 @@ import "fmt"
 // This is a 4x4 matrix of float32, stored in OpenGl format. Note - it's not rowmajor
 type Matrix4 []float32
 
-func MakeMatrix4V(v []float32, rowMajor bool) Matrix4 {
+func NewMatrix4V(v []float32, rowMajor bool) Matrix4 {
 	if rowMajor {
 		// transform the data to OpenGl format
 		return Matrix4{v[0], v[4], v[8], v[12], v[1], v[5], v[9], v[13], v[2], v[6], v[10], v[14], v[3], v[7], v[11], v[15]}[:]
@@ -23,11 +23,11 @@ func MakeMatrix4V(v []float32, rowMajor bool) Matrix4 {
 	return Matrix4{v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8], v[9], v[10], v[11], v[12], v[13], v[14], v[15]}[:]
 }
 
-func MakeMatrix4() Matrix4 {
+func NewMatrix4() Matrix4 {
 	return Matrix4{.0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0, .0}[:]
 }
 
-func MakeMatrix4I() Matrix4 {
+func NewMatrix4I() Matrix4 {
 	return Matrix4{1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
@@ -37,7 +37,7 @@ func MakeMatrix4I() Matrix4 {
 /*
 untested code
 */
-func MakeRotationMatrix(look, tmpUp Vector3) Matrix4 {
+func NewRotationMatrix(look, tmpUp Vector3) Matrix4 {
 
 	look = look.Copy().Normalize()
 	right := tmpUp.Copy().Normalize().Cross(look).Normalize()
@@ -83,7 +83,7 @@ func (m Matrix4) Sub(q Matrix4) Matrix4 {
 		m[9] - q[9], m[10] - q[10], m[11] - q[11], m[12] - q[12], m[13] - q[13], m[14] - q[14], m[15] - q[15]}[:]
 }
 
-func (m Matrix4) MakeZero() Matrix4 {
+func (m Matrix4) NewZero() Matrix4 {
 	m[0], m[1], m[2], m[3] = 0, 0, 0, 0
 	m[4], m[5], m[6], m[7] = 0, 0, 0, 0
 	m[8], m[9], m[10], m[11] = 0, 0, 0, 0
@@ -91,7 +91,7 @@ func (m Matrix4) MakeZero() Matrix4 {
 	return m
 }
 
-func (m Matrix4) MakeIdentity() Matrix4 {
+func (m Matrix4) NewIdentity() Matrix4 {
 	m[0], m[1], m[2], m[3] = 1, 0, 0, 0
 	m[4], m[5], m[6], m[7] = 0, 1, 0, 0
 	m[8], m[9], m[10], m[11] = 0, 0, 1, 0
@@ -155,7 +155,7 @@ func (m Matrix4) Inverse() Matrix4 {
 
 // Todo - fixme
 func (m Matrix4) Cofactor() Matrix4 {
-	r := MakeMatrix4()
+	r := NewMatrix4()
 	r[0] = (m[4]*m[8] - m[5]*m[7])
 	r[1] = -(m[3]*m[8] - m[5]*m[6])
 	r[2] = (m[3]*m[7] - m[4]*m[6])
@@ -191,7 +191,7 @@ func (m Matrix4) MultiplyV(v Vector4) Vector4 {
 }
 
 func (m Matrix4) MultiplyM(q Matrix4) Matrix4 {
-	r := MakeMatrix4()
+	r := NewMatrix4()
 	r[0] = q[0]*m[0] + q[1]*m[4] + q[2]*m[8] + q[3]*m[12]
 	r[1] = q[0]*m[1] + q[1]*m[5] + q[2]*m[9] + q[3]*m[13]
 	r[2] = q[0]*m[2] + q[1]*m[6] + q[2]*m[10] + q[3]*m[14]
@@ -244,9 +244,9 @@ func (a Matrix4) ApproxEquals(b Matrix4, ε float32) bool {
 /*
 // Orthogonalize will modify this matrix (fixme)
 func (m Matrix4) Orthogonalize(){
-	i := MakeVf(m[0],m[1],m[2])
-	j := MakeVf(m[3],m[4],m[5]) 
-	k := MakeVf(m[6],m[7],m[8]).Normalize();
+	i := NewVf(m[0],m[1],m[2])
+	j := NewVf(m[3],m[4],m[5]) 
+	k := NewVf(m[6],m[7],m[8]).Normalize();
 	i = j.Cross(k).Normalize()
 	j=k.Cross(i);
 	m[0]=i[0]; m[3]=j[0]; m[6]=k[0]

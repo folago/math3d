@@ -34,37 +34,37 @@ func Setup3() {
 
 // 
 func makeA3() Matrix3 {
-	return MakeMatrix3V([]float32{1, 2, 3, 4, 5, -6, 7, 8, 9}, true)
+	return NewMatrix3V([]float32{1, 2, 3, 4, 5, -6, 7, 8, 9}, true)
 }
 
 // Symmetrical B.Transpose()==B
 func makeB3() Matrix3 {
-	return MakeMatrix3V([]float32{1, 0, 1, 0, 0, 1, 1, 1, 0}, true)
+	return NewMatrix3V([]float32{1, 0, 1, 0, 0, 1, 1, 1, 0}, true)
 }
 
 func makeC3() Matrix3 {
-	return MakeMatrix3V([]float32{0, 1, 1, 1, 0, 0, 0, 0, 0}, true)
+	return NewMatrix3V([]float32{0, 1, 1, 1, 0, 0, 0, 0, 0}, true)
 }
 
 // Symmetrical D.Transpose()==D
 func makeD3() Matrix3 {
-	return MakeMatrix3V([]float32{1, 1, 1, 1, 1, 1, 1, 1, 1}, true)
+	return NewMatrix3V([]float32{1, 1, 1, 1, 1, 1, 1, 1, 1}, true)
 }
 
 func makeM2() Matrix3 {
-	return MakeMatrix3V([]float32{1, 4, 7, 2, 5, -8, 3, 6, 9}, true)
+	return NewMatrix3V([]float32{1, 4, 7, 2, 5, -8, 3, 6, 9}, true)
 }
 
 func makeM4() Matrix3 {
-	return MakeMatrix3V([]float32{10, 4, 8, 1, 5, 9, 2, 6, 10}, true)
+	return NewMatrix3V([]float32{10, 4, 8, 1, 5, 9, 2, 6, 10}, true)
 }
 
 func makeM2M4() Matrix3 {
-	return MakeMatrix3V([]float32{18, 32, 56, 57, 77, 137, 80, 42, 74}, true)
+	return NewMatrix3V([]float32{18, 32, 56, 57, 77, 137, 80, 42, 74}, true)
 }
 
 func makeM4M2() Matrix3 {
-	return MakeMatrix3V([]float32{82, -24, 126, 84, -45, 114, 96, -46, 132}, true)
+	return NewMatrix3V([]float32{82, -24, 126, 84, -45, 114, 96, -46, 132}, true)
 }
 
 func Test_3Approximates1(t *testing.T) {
@@ -186,10 +186,10 @@ func Test_3Inv1(t *testing.T) {
 	}
 
 	for i := 0; i < len(a3Array); i++ {
-		A := MakeMatrix3V(a3Array[i], true)
-		B := MakeMatrix3V(b3Array[i], true)
-		AI := MakeMatrix3V(aI3Array[i], true)
-		BI := MakeMatrix3V(bI3Array[i], true)
+		A := NewMatrix3V(a3Array[i], true)
+		B := NewMatrix3V(b3Array[i], true)
+		AI := NewMatrix3V(aI3Array[i], true)
+		BI := NewMatrix3V(bI3Array[i], true)
 		ai := A.Copy().Inverse()
 		bi := B.Copy().Inverse()
 		if !AI.ApproxEquals(ai, ε3d) {
@@ -217,12 +217,12 @@ func Test_3Transpose3(t *testing.T) {
 	}
 
 	for i := 0; i < len(a3Array); i++ {
-		A := MakeMatrix3V(a3Array[i], true)
+		A := NewMatrix3V(a3Array[i], true)
 		at := A.Copy().Transpose()
-		B := MakeMatrix3V(b3Array[i], true)
+		B := NewMatrix3V(b3Array[i], true)
 		bt := B.Copy().Transpose()
 		btat := bt.Copy().MultiplyM(at)
-		P := MakeMatrix3V(p3Array[i], true)
+		P := NewMatrix3V(p3Array[i], true)
 		pt := P.Copy().Transpose()
 		if !pt.ApproxEquals(btat, ε3d) {
 			fmt.Println("failed to transpose and multiply 'Bt*At'. Expected result as 'Pt', got 'btat'")
@@ -242,9 +242,9 @@ func Test_3Mutiply1(t *testing.T) {
 	}
 
 	for i := 0; i < len(a3Array); i++ {
-		A := MakeMatrix3V(a3Array[i], true)
-		B := MakeMatrix3V(b3Array[i], true)
-		P := MakeMatrix3V(p3Array[i], true)
+		A := NewMatrix3V(a3Array[i], true)
+		B := NewMatrix3V(b3Array[i], true)
+		P := NewMatrix3V(p3Array[i], true)
 		p := A.Copy().MultiplyM(B)
 		if !P.ApproxEquals(p, ε3d) {
 			fmt.Println("failed to multiply 'A*B'. Expected result as 'P', got 'p'")
@@ -260,7 +260,7 @@ func Test_3Mutiply1(t *testing.T) {
 
 func Test_3Mutiply2(t *testing.T) {
 
-	I := MakeMatrix3().MakeIdentity()
+	I := NewMatrix3().NewIdentity()
 
 	A := makeA3()
 	ai := A.Copy().Inverse()
@@ -317,7 +317,7 @@ func Test_3Transpose4(t *testing.T) {
 	}
 
 	for i := 0; i < len(a3Array); i++ {
-		A := MakeMatrix3V(a3Array[i], true)
+		A := NewMatrix3V(a3Array[i], true)
 		att := A.Copy().Transpose().Transpose()
 		if !att.Equal(A) {
 			fmt.Println("failed to double transpose 'A'. Expected result as 'A', got 'att' (!Equal)")
@@ -343,9 +343,9 @@ func Test_3VectorMul_1(t *testing.T) {
 	}
 
 	for i := 0; i < len(v03Array); i++ {
-		V0 := MakeVector3V(v03Array[i])
-		M := MakeMatrix3V(va3Array[i], true)
-		V1 := MakeVector3V(v13Array[i])
+		V0 := NewVector3V(v03Array[i])
+		M := NewMatrix3V(va3Array[i], true)
+		V1 := NewVector3V(v13Array[i])
 		v1 := V0.MultiplyM(M)
 
 		if !v1.ApproxEquals(V1, ε3d) {
@@ -366,10 +366,10 @@ func Test_3VectorMul_2(t *testing.T) {
 	}
 
 	for i := 0; i < len(v03Array); i++ {
-		V0 := MakeVector3V(v03Array[i])
+		V0 := NewVector3V(v03Array[i])
 		v0 := V0.Add(V0).Add(V0).Sub(V0)
-		M := MakeMatrix3V(va3Array[i], true)
-		V1 := MakeVector3V(v13Array[i])
+		M := NewMatrix3V(va3Array[i], true)
+		V1 := NewVector3V(v13Array[i])
 		V1 = V1.Add(V1)
 
 		v1 := v0.MultiplyM(M)

@@ -35,7 +35,7 @@ func Setup4() {
 }
 
 func makeA() Matrix4 {
-	return MakeMatrix4V([]float32{1, 2, 3, 4,
+	return NewMatrix4V([]float32{1, 2, 3, 4,
 		5, 6, -7, 8,
 		9, 10, 11, 12,
 		13, 14, 15, -16},
@@ -43,7 +43,7 @@ func makeA() Matrix4 {
 }
 
 func makeB() Matrix4 {
-	return MakeMatrix4V([]float32{1, 0, 0, 0,
+	return NewMatrix4V([]float32{1, 0, 0, 0,
 		0, 0, 1, 0,
 		0, 1, 0, 0,
 		0, 0, 0, 1},
@@ -51,7 +51,7 @@ func makeB() Matrix4 {
 }
 
 func makeC() Matrix4 {
-	return MakeMatrix4V([]float32{0, 0, 1, 0,
+	return NewMatrix4V([]float32{0, 0, 1, 0,
 		1, 0, 0, 0,
 		0, 0, 0, 1,
 		0, 1, 0, 0},
@@ -59,7 +59,7 @@ func makeC() Matrix4 {
 }
 
 func makeD() Matrix4 {
-	return MakeMatrix4V([]float32{1, 1, 1, 1,
+	return NewMatrix4V([]float32{1, 1, 1, 1,
 		1, 1, 1, 1,
 		1, 1, 1, 1,
 		1, 1, 1, 1},
@@ -149,7 +149,7 @@ func Test_4Transpose2(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
 		a := A.Transpose()
 
 		if !A.Equal(a) {
@@ -163,7 +163,7 @@ func Test_4Transpose2(t *testing.T) {
 
 func Test_4Mutiply0(t *testing.T) {
 
-	I := MakeMatrix4().MakeIdentity()
+	I := NewMatrix4().NewIdentity()
 
 	A := makeA()
 	ai := makeA().Inverse()
@@ -220,7 +220,7 @@ func Test_4Copy1(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
 		//fmt.Println("A",A)
 		a := A.Copy()
 		//fmt.Println("a",a)
@@ -259,10 +259,10 @@ func Test_4Inv1(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
-		B := MakeMatrix4V(b4Array[i], true)
-		AI := MakeMatrix4V(aI4Array[i], true)
-		BI := MakeMatrix4V(bI4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
+		B := NewMatrix4V(b4Array[i], true)
+		AI := NewMatrix4V(aI4Array[i], true)
+		BI := NewMatrix4V(bI4Array[i], true)
 		ai := A.Copy().Inverse()
 		bi := B.Copy().Inverse()
 		if !AI.ApproxEquals(ai, ε4d) {
@@ -290,7 +290,7 @@ func Test_4Transpose3(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
 		att := A.Copy().Transpose().Transposed()
 		if !att.Equal(A) {
 			fmt.Println("failed to double transpose 'A'. Expected result as 'A', got 'att'")
@@ -316,9 +316,9 @@ func Test_4Transpose4(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
 		//fmt.Println("A",strings.Replace(A.String(),"],[","],\n[",-1))
-		AT := MakeMatrix4V(aT4Array[i], true)
+		AT := NewMatrix4V(aT4Array[i], true)
 		at := A.Copy().Transpose()
 		//fmt.Println("A",strings.Replace(A.String(),"],[","],\n[",-1))
 		//fmt.Println("at", strings.Replace(at.String(),"],[","],\n[",-1))
@@ -348,12 +348,12 @@ func Test_4Transpose5(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
 		at := A.Copy().Transpose()
-		B := MakeMatrix4V(b4Array[i], true)
+		B := NewMatrix4V(b4Array[i], true)
 		bt := B.Copy().Transposed()
 		btat := bt.Copy().MultiplyM(at)
-		P := MakeMatrix4V(p4Array[i], true)
+		P := NewMatrix4V(p4Array[i], true)
 		pt := P.Copy().Transpose()
 		if !pt.ApproxEquals(btat, ε4d) {
 			fmt.Println("failed to transpose and multiply 'Bt*At'. Expected result as 'Pt', got 'btat'")
@@ -373,9 +373,9 @@ func Test_4Mutiply1(t *testing.T) {
 	}
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
-		B := MakeMatrix4V(b4Array[i], true)
-		P := MakeMatrix4V(p4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
+		B := NewMatrix4V(b4Array[i], true)
+		P := NewMatrix4V(p4Array[i], true)
 		p := A.Copy().MultiplyM(B)
 		if !P.ApproxEquals(p, ε4d) {
 			fmt.Println("failed to multiply 'A*B'. Expected result as 'P', got 'p'")
@@ -393,11 +393,11 @@ func Test_4Mutiply3(t *testing.T) {
 	if !setup4 {
 		Setup4()
 	}
-	I := MakeMatrix4().MakeIdentity()
+	I := NewMatrix4().NewIdentity()
 
 	for i := 0; i < len(a4Array); i++ {
-		A := MakeMatrix4V(a4Array[i], true)
-		B := MakeMatrix4V(b4Array[i], true)
+		A := NewMatrix4V(a4Array[i], true)
+		B := NewMatrix4V(b4Array[i], true)
 		at := A.Copy().Transpose()
 		ati := at.Copy().Inverse()
 		bt := B.Copy().Transpose()
@@ -421,10 +421,10 @@ func Test_4Mutiply3(t *testing.T) {
 }
 
 func Test_4Quat1(t *testing.T) {
-	m := MakeQuaternion(.0, 0, 0, 0)
+	m := NewQuaternion(.0, 0, 0, 0)
 
-	p, _ := MakeQuaternion(.0, 1, -1, 1).Normalize(ε4d)
-	q, _ := MakeQuaternion(math.Pi/2., -1., 1., -1.).Normalize(ε4d)
+	p, _ := NewQuaternion(.0, 1, -1, 1).Normalize(ε4d)
+	q, _ := NewQuaternion(math.Pi/2., -1., 1., -1.).Normalize(ε4d)
 
 	if p.ApproxEquals(q, ε4d) {
 		fmt.Println("P!=Q test failed")
@@ -460,8 +460,8 @@ func Test_4Quat1(t *testing.T) {
 
 func Test_4Quat2(t *testing.T) {
 
-	p := MakeQuaternion(.0, 1, 0, 0)
-	q := MakeQuaternionCopy(p)
+	p := NewQuaternion(.0, 1, 0, 0)
+	q := NewQuaternionCopy(p)
 	q[1] = p[1] * ε4d * 2.
 
 	if p.Equal(q) {
@@ -490,8 +490,8 @@ func Test_4Quat2(t *testing.T) {
 
 func Test_4Quat3(t *testing.T) {
 
-	P1 := MakeQuaternion(1, 2, 3, 4)
-	P1N := MakeQuaternion(0.182574, 0.365148, 0.547723, 0.730297)
+	P1 := NewQuaternion(1, 2, 3, 4)
+	P1N := NewQuaternion(0.182574, 0.365148, 0.547723, 0.730297)
 	p1n, _ := P1.Copy().Normalize(internalε)
 	if !p1n.ApproxEquals(P1N, ε4d) {
 		fmt.Println("Failed to normalize 'P1'. Expected results as 'P1N' got 'p1'")
@@ -502,8 +502,8 @@ func Test_4Quat3(t *testing.T) {
 		t.Fail()
 	}
 
-	P2 := MakeQuaternion(4, 3, 2, -1)
-	P2N := MakeQuaternion(0.730297, 0.547723, 0.365148, -0.182574)
+	P2 := NewQuaternion(4, 3, 2, -1)
+	P2N := NewQuaternion(0.730297, 0.547723, 0.365148, -0.182574)
 	p2n, _ := P2.Copy().Normalize(internalε)
 	if !p2n.ApproxEquals(P2N, ε4d) {
 		fmt.Println("Failed to normalize 'P2'. Expected results as 'P2N' got 'p2'")
@@ -528,7 +528,7 @@ func Test_4Quat3(t *testing.T) {
 		0.666667, -0.333333, 0.666667, 0.000000,
 		0.333333, 0.933333, 0.133333, 0.000000,
 		0.000000, 0.000000, 0.000000, 1.000000}[:]
-	M := MakeMatrix4V(mdata, true)
+	M := NewMatrix4V(mdata, true)
 	m := p1n.ToRotationMatrix()
 	if !m.ApproxEquals(M, ε4d) {
 		fmt.Println("Failed generate rotation matrix. Expected results as 'M' got 'm'")
@@ -538,9 +538,9 @@ func Test_4Quat3(t *testing.T) {
 		t.Fail()
 	}
 
-	v0 := MakeVector4(1., 0, 0, 0.)
+	v0 := NewVector4(1., 0, 0, 0.)
 	r1 := v0.Copy().MultiplyM(m)
-	R1 := MakeVector4(-0.666667, 0.133333, 0.733333, 0.000000)
+	R1 := NewVector4(-0.666667, 0.133333, 0.733333, 0.000000)
 
 	if !r1.ApproxEquals(R1, ε4d) {
 		fmt.Println("Failed multiply v0*m. Expected results as 'R1' got 'r1'")
@@ -567,10 +567,10 @@ func Test_4VectorMul_1(t *testing.T) {
 	}
 
 	for i := 0; i < len(v04Array); i++ {
-		V0 := MakeVector4V(v04Array[i])
+		V0 := NewVector4V(v04Array[i])
 		v0 := V0.Add(V0).Add(V0).Sub(V0)
-		M := MakeMatrix4V(va4Array[i], true)
-		V1 := MakeVector4V(v14Array[i])
+		M := NewMatrix4V(va4Array[i], true)
+		V1 := NewVector4V(v14Array[i])
 		V1 = V1.Add(V1)
 
 		v1 := v0.MultiplyM(M)

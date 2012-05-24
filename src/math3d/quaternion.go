@@ -14,19 +14,19 @@ import "math"
 // This is a 4 element vector float32
 type Quaternion []float32
 
-func MakeQuaternion(s, x, y, z float32) Quaternion {
+func NewQuaternion(s, x, y, z float32) Quaternion {
 	return Quaternion{s, x, y, z}[:]
 }
 
-func MakeQuaternionV(v []float32) Quaternion {
+func NewQuaternionV(v []float32) Quaternion {
 	return Quaternion{v[0], v[1], v[2], v[3]}[:]
 }
 
-func MakeQuaternionM(rotationMatrix Matrix4) Quaternion {
+func NewQuaternionM(rotationMatrix Matrix4) Quaternion {
 	return rotationMatrix.ToQuaternion()
 }
 
-func MakeQFromAxisAngle(axis Vector3, angle float32) Quaternion {
+func NewQFromAxisAngle(axis Vector3, angle float32) Quaternion {
 	// assert:  axis[] is unit length
 	//
 	// The quaternion representing the rotation is
@@ -41,7 +41,7 @@ func (q Quaternion) Copy() Quaternion {
 	return Quaternion{q[0], q[1], q[2], q[3]}[:]
 }
 
-func MakeQuaternionCopy(q Quaternion) Quaternion {
+func NewQuaternionCopy(q Quaternion) Quaternion {
 	return Quaternion{q[0], q[1], q[2], q[3]}[:]
 }
 

@@ -12,11 +12,11 @@ import "fmt"
 
 type Vector4 []float32
 
-func MakeVector4V(v []float32) Vector4 {
+func NewVector4V(v []float32) Vector4 {
 	return Vector4{v[0], v[1], v[2], v[3]}[:]
 }
 
-func MakeVector4(x, y, z, o float32) Vector4 {
+func NewVector4(x, y, z, o float32) Vector4 {
 	v := Vector4{x, y, z, o}
 	return v
 }

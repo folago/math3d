@@ -13,11 +13,11 @@ import "math"
 
 type Vector3 []float32
 
-func MakeVector3(x, y, z float32) Vector3 {
+func NewVector3(x, y, z float32) Vector3 {
 	return Vector3{x, y, z}[:]
 }
 
-func MakeVector3V(v []float32) Vector3 {
+func NewVector3V(v []float32) Vector3 {
 	return Vector3{v[0], v[1], v[2]}[:]
 }
 

@@ -12,7 +12,7 @@ import "fmt"
 
 type Matrix3 []float32
 
-func MakeMatrix3V(v []float32, rowMajor bool) Matrix3 {
+func NewMatrix3V(v []float32, rowMajor bool) Matrix3 {
 	if rowMajor {
 		// transform the data to OpenGl format
 		return Matrix3{v[0], v[3], v[6], v[1], v[4], v[7], v[2], v[5], v[8]}[:]
@@ -20,7 +20,7 @@ func MakeMatrix3V(v []float32, rowMajor bool) Matrix3 {
 	return Matrix3{v[0], v[1], v[2], v[3], v[4], v[5], v[6], v[7], v[8]}[:]
 }
 
-func MakeMatrix3() Matrix3 {
+func NewMatrix3() Matrix3 {
 	return Matrix3{.0, .0, .0, .0, .0, .0, .0, .0, .0}[:]
 }
 
@@ -28,7 +28,7 @@ func (m Matrix3) Copy() Matrix3 {
 	return Matrix3{m[0], m[1], m[2], m[3], m[4], m[5], m[6], m[7], m[8]}[:]
 }
 
-func (m Matrix3) MakeZero() Matrix3 {
+func (m Matrix3) NewZero() Matrix3 {
 	m[0] = .0
 	m[1] = .0
 	m[2] = .0
@@ -41,7 +41,7 @@ func (m Matrix3) MakeZero() Matrix3 {
 	return m
 }
 
-func (m Matrix3) MakeIdentity() Matrix3 {
+func (m Matrix3) NewIdentity() Matrix3 {
 	m[0] = 1.
 	m[4] = 1.
 	m[8] = 1.
@@ -64,7 +64,7 @@ func (m Matrix3) MulS(scalar float32) Matrix3 {
 }
 
 func (m Matrix3) Inverse() Matrix3 {
-	r := MakeMatrix3()
+	r := NewMatrix3()
 	d := 1.0 / m.Determinant()
 	r[0] = d * (m[4]*m[8] - m[5]*m[7])
 	r[1] = -d * (m[1]*m[8] - m[2]*m[7])
@@ -79,7 +79,7 @@ func (m Matrix3) Inverse() Matrix3 {
 }
 
 func (m Matrix3) Cofactor() Matrix3 {
-	r := MakeMatrix3()
+	r := NewMatrix3()
 	r[0] = (m[4]*m[8] - m[5]*m[7])
 	r[1] = -(m[3]*m[8] - m[5]*m[6])
 	r[2] = (m[3]*m[7] - m[4]*m[6])
@@ -108,7 +108,7 @@ func (m Matrix3) MultiplyV(v Vector3) Vector3 {
 }
 
 func (m Matrix3) MultiplyM(q Matrix3) Matrix3 {
-	r := MakeMatrix3()
+	r := NewMatrix3()
 	r[0] = q[0]*m[0] + q[1]*m[3] + q[2]*m[6]
 	r[1] = q[0]*m[1] + q[1]*m[4] + q[2]*m[7]
 	r[2] = q[0]*m[2] + q[1]*m[5] + q[2]*m[8]
@@ -137,9 +137,9 @@ func (m Matrix3) Transpose() Matrix3 {
 /*
 // Orthogonalize will modify this matrix
 func (m Matrix3) Orthogonalize(){
-	i := MakeVector3(m[0],m[1],m[2])
-	j := MakeVector3(m[3],m[4],m[5]) 
-	k := MakeVector3(m[6],m[7],m[8]).Normalize();
+	i := NewVector3(m[0],m[1],m[2])
+	j := NewVector3(m[3],m[4],m[5]) 
+	k := NewVector3(m[6],m[7],m[8]).Normalize();
 	i = j.Cross(k).Normalize()
 	j=k.Cross(i);
 	m[0]=i[0]; m[3]=j[0]; m[6]=k[0]
