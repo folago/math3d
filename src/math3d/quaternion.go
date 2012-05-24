@@ -127,7 +127,7 @@ func (m Quaternion) RotationMatrix() Matrix4 {
 		1. - (twoYY + twoZZ), twoXY + twoWZ, twoXZ - twoWY, 0.,
 		twoXY - twoWZ, 1. - (twoXX + twoZZ), twoYZ + twoWX, 0.,
 		twoXZ + twoWY, twoYZ - twoWX, 1. - (twoXX + twoYY), 0.,
-		0., 0., 0., 1.}[:]
+		0., 0., 0., 1.}
 }
 
 func (m Quaternion) FromAxisAngle(axis Vector3, angle float32) Quaternion {
