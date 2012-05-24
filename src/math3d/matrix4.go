@@ -9,6 +9,7 @@ http://www.geometrictools.com/License/Boost/LICENSE_1_0.txt
 package math3d
 
 import "fmt"
+
 //import "math"
 
 // This is a 4x4 matrix of float32, stored in OpenGl format. Note - it's not rowmajor
@@ -83,18 +84,18 @@ func (m Matrix4) Sub(q Matrix4) Matrix4 {
 }
 
 func (m Matrix4) MakeZero() Matrix4 {
-	m[0],m[1],m[2],m[3] = 0,0,0,0
-	m[4],m[5],m[6],m[7] = 0,0,0,0
-	m[8],m[9],m[10],m[11] = 0,0,0,0
-	m[12],m[13],m[14],m[15] = 0,0,0,0
+	m[0], m[1], m[2], m[3] = 0, 0, 0, 0
+	m[4], m[5], m[6], m[7] = 0, 0, 0, 0
+	m[8], m[9], m[10], m[11] = 0, 0, 0, 0
+	m[12], m[13], m[14], m[15] = 0, 0, 0, 0
 	return m
 }
 
 func (m Matrix4) MakeIdentity() Matrix4 {
-	m[0],m[1],m[2],m[3] = 1,0,0,0
-	m[4],m[5],m[6],m[7] = 0,1,0,0
-	m[8],m[9],m[10],m[11] = 0,0,1,0
-	m[12],m[13],m[14],m[15] = 0,0,0,1
+	m[0], m[1], m[2], m[3] = 1, 0, 0, 0
+	m[4], m[5], m[6], m[7] = 0, 1, 0, 0
+	m[8], m[9], m[10], m[11] = 0, 0, 1, 0
+	m[12], m[13], m[14], m[15] = 0, 0, 0, 1
 	return m
 }
 
@@ -274,7 +275,7 @@ func (m Matrix4) ToQuaternion() Quaternion {
 	// article "HQuaternion Calculus and Fast Animation".
 	toQuaternionNext := []int{1, 2, 0}
 
-	q := Quaternion{0,0,0,0}
+	q := Quaternion{0, 0, 0, 0}
 	//fmt.Println("q = ", q)
 	trace := m[0] + m[5] + m[10]
 	var root float32
