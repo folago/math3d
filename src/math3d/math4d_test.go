@@ -111,16 +111,16 @@ func Test_4Approximates2(t *testing.T) {
 }
 
 func Test_4Transpose1(t *testing.T) {
-	// Testing Transposed(), not Transpose()
+	// Testing Transpose(), not ITranspose()
 
 	A := makeA()
-	a := A.Transposed()
+	a := A.Transpose()
 	B := makeB()
-	b := makeB().Transposed()
+	b := makeB().Transpose()
 	C := makeC()
-	c := makeC().Transposed()
+	c := makeC().Transpose()
 	D := makeD()
-	d := makeD().Transposed()
+	d := makeD().Transpose()
 
 	if A.Equal(a) {
 		fmt.Println("A", A)
@@ -146,18 +146,18 @@ func Test_4Transpose1(t *testing.T) {
 
 func Test_4Transpose2(t *testing.T) {
 
-	// Testing Transpose(), not Transposed()
-	// Transpose() should alter the original too
+	// Testing ITranspose(), not Transpose()
+	// ITranspose() should alter the original too
 	if !setup3 {
 		Setup3()
 	}
 
 	for i := 0; i < len(a4Array); i++ {
 		A, _ := NewMatrix4V(a4Array[i], true)
-		a := A.Transpose()
+		a := A.ITranspose()
 
 		if !A.Equal(a) {
-			fmt.Println("Transpose() should alter the original")
+			fmt.Println("ITranspose() should alter the original")
 			fmt.Println("A", A)
 			fmt.Println("a", a)
 			t.Fail()
@@ -296,7 +296,7 @@ func Test_4Transpose3(t *testing.T) {
 	for i := 0; i < len(a4Array); i++ {
 		A, _ := NewMatrix4V(a4Array[i], true)
 		att := A
-		att = att.Transpose().Transposed()
+		att = att.ITranspose().Transpose()
 		if !att.Equal(A) {
 			fmt.Println("failed to double transpose 'A'. Expected result as 'A', got 'att'")
 			fmt.Println("A	=", A)
@@ -324,7 +324,7 @@ func Test_4Transpose4(t *testing.T) {
 		A, _ := NewMatrix4V(a4Array[i], true)
 		//fmt.Println("A",strings.Replace(A.String(),"],[","],\n[",-1))
 		AT, _ := NewMatrix4V(aT4Array[i], true)
-		at := A.Transpose()
+		at := A.ITranspose()
 		//fmt.Println("A",strings.Replace(A.String(),"],[","],\n[",-1))
 		//fmt.Println("at", strings.Replace(at.String(),"],[","],\n[",-1))
 		if !at.Equal(AT) {
@@ -354,12 +354,12 @@ func Test_4Transpose5(t *testing.T) {
 
 	for i := 0; i < len(a4Array); i++ {
 		A, _ := NewMatrix4V(a4Array[i], true)
-		at := A.Transpose()
+		at := A.ITranspose()
 		B, _ := NewMatrix4V(b4Array[i], true)
-		bt := B.Transposed()
+		bt := B.Transpose()
 		btat := bt.Mul(at)
 		P, _ := NewMatrix4V(p4Array[i], true)
-		pt := P.Transpose()
+		pt := P.ITranspose()
 		if !pt.ApproxEquals(btat, ε4d) {
 			fmt.Println("failed to transpose and multiply 'Bt*At'. Expected result as 'Pt', got 'btat'")
 			fmt.Println("A\t=", A)
@@ -403,9 +403,9 @@ func Test_4Mutiply3(t *testing.T) {
 	for i := 0; i < len(a4Array); i++ {
 		A, _ := NewMatrix4V(a4Array[i], true)
 		B, _ := NewMatrix4V(b4Array[i], true)
-		at := A.Transpose()
+		at := A.ITranspose()
 		ati := at.Inverse()
-		bt := B.Transpose()
+		bt := B.ITranspose()
 		bti := bt.Inverse()
 		ai := A.Inverse()
 		bi := B.Inverse()

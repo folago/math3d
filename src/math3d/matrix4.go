@@ -290,7 +290,7 @@ func (m *Matrix4) IMul(q Matrix4) {
 }
 
 // Transposed will *not* modify m
-func (m Matrix4) Transposed() Matrix4 {
+func (m Matrix4) Transpose() Matrix4 {
 	return Matrix4{
 		m[0], m[4], m[8], m[12],
 		m[1], m[5], m[9], m[13],
@@ -300,8 +300,8 @@ func (m Matrix4) Transposed() Matrix4 {
 }
 
 // Transpose will modify m
-func (m *Matrix4) Transpose() Matrix4 {
-	*m = m.Transposed()
+func (m *Matrix4) ITranspose() Matrix4 {
+	*m = m.Transpose()
 	return *m
 }
 
