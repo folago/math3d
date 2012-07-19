@@ -39,6 +39,10 @@ func (v1 Vector4) Cross(v2 Vector4) Vector4 {
 	return Vector4{v1[1]*v2[2] - v1[2]*v2[1], v1[2]*v2[0] - v1[0]*v2[2], v1[0]*v2[1] - v1[1]*v2[0]}
 }
 
+func (v Vector4) Mul(scalar float32) Vector4 {
+	return Vector4{v[0] * scalar, v[1] * scalar, v[2] * scalar, v[3] * scalar}
+}
+
 /*
 // For those cases when the 4d vector represents just a 3d vector. 4:t axis is ignored
 func (v1 Vector4) Dot3d(v2 Vector4) float32 {

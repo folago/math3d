@@ -14,7 +14,7 @@ import (
 )
 
 // This is a 4x4 matrix of float32, stored in OpenGl format. Note - it's not rowmajor
-type Matrix4 [16]float32
+type Matrix4 []float32
 
 func NewMatrix4V(v []float32, rowMajor bool) (Matrix4, error) {
 	if len(v) != 16 {
@@ -66,7 +66,7 @@ func (m Matrix4) MulS(scalar float32) Matrix4 {
 	}
 }
 
-func (m *Matrix4) IMulS(scalar float32) {
+func (m Matrix4) IMulS(scalar float32) {
 	m[0] *= scalar
 	m[1] *= scalar
 	m[2] *= scalar
@@ -114,7 +114,7 @@ func (m Matrix4) Plus(q Matrix4) Matrix4 {
 	}
 }
 
-func (m *Matrix4) IPlus(q Matrix4) {
+func (m Matrix4) IPlus(q Matrix4) {
 	m[0] += q[0]
 	m[1] += q[1]
 	m[2] += q[2]
@@ -142,7 +142,7 @@ func (m Matrix4) Sub(q Matrix4) Matrix4 {
 	}
 }
 
-func (m *Matrix4) ISub(q Matrix4) {
+func (m Matrix4) ISub(q Matrix4) {
 	m[0] -= q[0]
 	m[1] -= q[1]
 	m[2] -= q[2]
@@ -231,6 +231,7 @@ func (m Matrix4) Inverse() (Matrix4, error) {
 	}, nil
 }
 
+/*
 // FIXME - fixme
 func (m Matrix4) cofactor() Matrix4 {
 	r := NewMatrix4()
@@ -246,6 +247,7 @@ func (m Matrix4) cofactor() Matrix4 {
 	return r
 }
 
+
 func (m Matrix4) Equal(q Matrix4) bool {
 	return m == q
 }
@@ -253,6 +255,7 @@ func (m Matrix4) Equal(q Matrix4) bool {
 func (m Matrix4) NotEqual(q Matrix4) bool {
 	return m != q
 }
+*/
 
 func (m Matrix4) Mul(q Matrix4) Matrix4 {
 	r := NewMatrix4()
@@ -275,25 +278,9 @@ func (m Matrix4) Mul(q Matrix4) Matrix4 {
 	return r
 }
 
-func (m *Matrix4) IMul(q Matrix4) {
-	var r Matrix4
-	r[0] = q[0]*m[0] + q[1]*m[4] + q[2]*m[8] + q[3]*m[12]
-	r[1] = q[0]*m[1] + q[1]*m[5] + q[2]*m[9] + q[3]*m[13]
-	r[2] = q[0]*m[2] + q[1]*m[6] + q[2]*m[10] + q[3]*m[14]
-	r[3] = q[0]*m[3] + q[1]*m[7] + q[2]*m[11] + q[3]*m[15]
-	r[4] = q[4]*m[0] + q[5]*m[4] + q[6]*m[8] + q[7]*m[12]
-	r[5] = q[4]*m[1] + q[5]*m[5] + q[6]*m[9] + q[7]*m[13]
-	r[6] = q[4]*m[2] + q[5]*m[6] + q[6]*m[10] + q[7]*m[14]
-	r[7] = q[4]*m[3] + q[5]*m[7] + q[6]*m[11] + q[7]*m[15]
-	r[8] = q[8]*m[0] + q[9]*m[4] + q[10]*m[8] + q[11]*m[12]
-	r[9] = q[8]*m[1] + q[9]*m[5] + q[10]*m[9] + q[11]*m[13]
-	r[10] = q[8]*m[2] + q[9]*m[6] + q[10]*m[10] + q[11]*m[14]
-	r[11] = q[8]*m[3] + q[9]*m[7] + q[10]*m[11] + q[11]*m[15]
-	r[12] = q[12]*m[0] + q[13]*m[4] + q[14]*m[8] + q[15]*m[12]
-	r[13] = q[12]*m[1] + q[13]*m[5] + q[14]*m[9] + q[15]*m[13]
-	r[14] = q[12]*m[2] + q[13]*m[6] + q[14]*m[10] + q[15]*m[14]
-	r[15] = q[12]*m[3] + q[13]*m[7] + q[14]*m[11] + q[15]*m[15]
-	*m = r
+func (m Matrix4) IMul(q Matrix4) {
+	temp := m.Mul(q)
+	copy(m, temp)
 }
 
 // Transposed will *not* modify m
@@ -306,10 +293,10 @@ func (m Matrix4) Transpose() Matrix4 {
 	}
 }
 
-// Transpose will modify m
-func (m *Matrix4) ITranspose() Matrix4 {
-	*m = m.Transpose()
-	return *m
+// ITranspose will modify m
+func (m Matrix4) ITranspose() {
+	temp := m.Transpose()
+	copy(m, temp)
 }
 
 /*
